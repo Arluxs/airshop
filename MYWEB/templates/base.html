@@ -1,133 +1,287 @@
+{% load static %}
 <!DOCTYPE html>
+
 <html>
+
 <head>
   <title>{% block title %}{% endblock %}</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="{% static 'js/ajax.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'webfonts/all.min.css' %}">
+
+
+  <script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+  <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
 
   {% load bootstrap5 %}
   {% bootstrap_css %}
   {% bootstrap_javascript %}
   {% load bootstrap_icons %}
 </head>
+
 <body>
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-fluid">
+      <img src="{% static 'imagenes/airsoftshop.png' %}" href="{% url 'listapro' %}" height="35"  class="d-block mx-auto d-md-none"/>
+      <img src="{% static 'imagenes/airsoftshop.png' %}" href="{% url 'listapro' %}" height="35" class="d-none d-md-block"/>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="modal" data-bs-target="#menuModal">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'listapro' %}">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <!--<a class="nav-link text-dark" href="#">Servicios</a> -->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'contacto' %}">Contacto</a>
+          </li>
+          <li class="nav-item">
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-dark" type="submit">Search</button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  
+    <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="{% url 'listapro' %}">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <!--<a class="nav-link text-dark" href="#">Servicios</a> -->
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="{% url 'contacto' %}">Contacto</a>
+              </li>
+              <li class="nav-item">
+                <form class="d-flex">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-dark" type="submit">Search</button>
+                </form>
+              </li>
+              <li>
+                
+  {% if not user.is_authenticated %}
   <div class="p-3 text-center bg-white border-bottom">
     <div class="container">
-      <div class="row gy-3">
+      <div class="row gy-2 justify-content-end"> <!-- Agrega la clase justify-content-end aquí -->
         <!-- Left elements -->
-        <div class="col-lg-2 col-sm-4 col-4">
-
-            <img src="https://picsum.photos/2160/420?random=3" height="35" />
-          </a>
-        </div>
-        <!-- Left elements -->
-
-        <!-- Center elements -->
         <div class="order-lg-last col-lg-5 col-sm-8 col-8">
           <div class="d-flex float-end">
-            <button type="button" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank"> {% bs_icon 'person' %} <p class="d-none d-md-block mb-0" data-bs-toggle="modal" data-bs-target="#loginModal">Sign in</p>
+            <button type="button" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark"
+              target="_blank">
+              <i class="fas fa-person"></i>
+              <p class="d-none d-md-block mb-0" data-bs-toggle="modal" data-bs-target="#loginModal">Iniciar sesion</p>
             </button>
-            <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank"> {% bs_icon 'heart' %}<p class="d-none d-md-block mb-0">Wishlist</p> </a>
-            <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank"> {% bs_icon 'cart3' %}<p class="d-none d-md-block mb-0">My cart</p> </a>
+            <a href="{% url 'lista_deseos' %}"
+              class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark" target="_blank">
+              <i class="fas fa-heart"></i>
+              <p class="d-none d-md-block mb-0">Wishlist</p>
+            </a>
+            <a href="{%url 'carrito' %}" class="border rounded py-1 px-3 nav-link d-flex align-items-center text-dark"
+              target="_blank">
+              <i class="fas fa-cart3"></i>
+              <p class="d-none d-md-block mb-0">My cart</p>
+            </a>
           </div>
         </div>
         <!-- Center elements -->
+        <div>
 
+        </div>
         <!-- Right elements -->
-        <div class="col-lg-5 col-md-7 col-12">
-          <div class="input-group float-center">
-            <div class="form-outline">
-              <input type="search" id="form1" class="form-control" />
-              <label class="form-label" for="form1">Search</label>
-            </div>
-            <button type="button" class="btn btn-primary shadow-0">
-              {% bs_icon 'search' %}
-            </button>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+
+
+
+
+
+  {% if user.is_authenticated %}
+  <div class="p-3 text-center bg-white border-bottom">
+    <div class="container">
+      <div class="row gy-2 justify-content-end">
+        <!-- Right elements -->
+        <div class="order-lg-last col-lg-5 col-sm-8 col-8">
+          <div class="d-flex float-end">
+            <a href="{% url 'lista_deseos' %}"
+              class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark" target="_blank">
+              <i class="fas fa-heart"></i>
+              <p class="d-none d-md-block mb-0">Wishlist</p>
+            </a>
+            <a href="{% url 'carrito' %}"
+              class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark" target="_blank">
+<i class="fas fa-cart3"></i>
+              <p class="d-none d-md-block mb-0">My cart</p>
+            </a>
+            <a href="{% url 'user_profile' %}"
+              class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark" target="_blank">
+              <i class="fas fa-person"></i>
+
+              <p class="d-none d-md-block mb-0">Hola {{ user.username }}!</p>
+            </a>
+            <a href="#" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark"
+              target="_blank">
+              <i class="fas fa-sign-out-alt"></i>
+
+              <p class="d-none d-md-block mb-0">Cerrar sesión</p>
+            </a>
           </div>
         </div>
         <!-- Right elements -->
       </div>
     </div>
   </div>
-  <!-- Jumbotron -->
+  {% endif %}
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #ffffff;">
-    <!-- Container wrapper -->
-    <div class="container justify-content-center justify-content-md-between">
-      <!-- Toggle button -->
-      <button
-              class="navbar-toggler border text-dark py-2"
-              type="button"
-              data-mdb-toggle="collapse"
-              data-mdb-target="#navbarLeftAlignExample"
-              aria-controls="navbarLeftAlignExample"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-              >
-        <i class="fas fa-bars"></i>
-      </button>
-
-      <!-- Collapsible wrapper -->
-      <div class="collapse navbar-collapse" id="navbarLeftAlignExample">
-        <!-- Left links -->
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link text-dark" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="#">Categories</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="#">Hot offers</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="#">Gift boxes</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="#">Projects</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="#">Menu item</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="#">Menu name</a>
-          </li>
-          <!-- Navbar dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-dark mb-0" href="#" id="navbarDropdown" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-              Others
-            </a>
-            <!-- Dropdown menu -->
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li>
-                <a class="dropdown-item" href="#">Action</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Another action</a>
-              </li>
-              <li><hr class="dropdown-divider" /></li>
-              <li>
-                <a class="dropdown-item" href="#">Something else here</a>
               </li>
             </ul>
-          </li>
-        </ul>
-        <!-- Left links -->
+          </div>
+        </div>
       </div>
     </div>
-    <!-- Container wrapper -->
   </nav>
-  <!-- Navbar -->
+  
+  
+  <!-- Modal -->
+  <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="menuModalLabel">Menú de Navegación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="{% url 'listapro' %}">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <!--<a class="nav-link text-dark" href="#">Servicios</a> -->
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="{% url 'contacto' %}">Contacto</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="#">Acerca de nosotros</a>
+            </li>
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
+  {% if not user.is_authenticated %}
+  <div class="p-3 text-center bg-white border-bottom">
+    <div class="container">
+      <div class="row gy-2 justify-content-end"> <!-- Agrega la clase justify-content-end aquí -->
+        <!-- Left elements -->
+        <div class="order-lg-last col-lg-5 col-sm-8 col-8">
+          <div class="d-flex float-end">
+            <button type="button" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark"
+              target="_blank">
+              <i class="fas fa-person"></i>
+              <p class="d-none d-md-block mb-0" data-bs-toggle="modal" data-bs-target="#loginModal">Iniciar sesion</p>
+            </button>
+            <a href="{% url 'wishlist' %}"
+              class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark" target="_blank">
+              <i class="fas fa-heart"></i>
+              <p class="d-none d-md-block mb-0">Wishlist</p>
+            </a>
+            <a href="{%url 'carrito' %}" class="border rounded py-1 px-3 nav-link d-flex align-items-center text-dark"
+              target="_blank">
+              <i class="fas fa-cart3"></i>
+              <p class="d-none d-md-block mb-0">My cart</p>
+            </a>
+          </div>
+        </div>
+        <!-- Center elements -->
+        <div>
+
+        </div>
+        <!-- Right elements -->
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+
+
+
+
+
+  {% if user.is_authenticated %}
+  <div class="p-3 text-center bg-white border-bottom">
+    <div class="container">
+      <div class="row gy-2 justify-content-end">
+        <!-- Right elements -->
+        <div class="order-lg-last col-lg-5 col-sm-8 col-8">
+          <div class="d-flex float-end">
+            <a href="{% url 'wishlist' %}"
+              class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark" target="_blank">
+              <i class="fas fa-heart"></i>
+              <p class="d-none d-md-block mb-0">Wishlist</p>
+            </a>
+            <a href="{% url 'carrito' %}"
+              class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark" target="_blank">
+              <i class="fas fa-cart3"></i>
+              <p class="d-none d-md-block mb-0">My cart</p>
+            </a>
+            <a href="{% url 'user_profile' %}"
+              class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark" target="_blank">
+              <i class="fas fa-person"></i>
+              <p class="d-none d-md-block mb-0">Hola {{ user.username }}!</p>
+            </a>
+            <a href="#" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark"
+              target="_blank">
+              <i class="fas fa-sign-out-alt"></i>
+
+              <p class="d-none d-md-block mb-0">Cerrar sesión</p>
+            </a>
+          </div>
+        </div>
+        <!-- Right elements -->
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+
+
+
+
   <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="https://picsum.photos/2160/420?random=1" alt="Los Angeles">
+        <img src="{% static 'imagenes/carrousel3.jpg' %}" style="max-width:100%;">
       </div>
       <div class="carousel-item">
-        <img src="https://picsum.photos/2160/420?random=2" alt="Chicago">
+        <img src="{% static 'imagenes/carrousel1.jpg' %}" style="max-width:100%;">
       </div>
       <div class="carousel-item">
-        <img src="https://picsum.photos/2160/420?random=3" alt="New York">
+        <img src="{% static 'imagenes/carrousel2.jpg' %}" style="max-width:100%;">
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -139,119 +293,321 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
-<!-- Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header bg-primary text-light">
-        <h5 class="modal-title" id="loginModalLabel">Iniciar sesión</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Formulario de inicio de sesión -->
-        <form id="contact-form">
-          <div class="mb-3">
-            <label for="loginEmail" class="form-label visually-hidden">Correo electrónico</label>
-            <div class="input-group">
-              <div class="input-group-text">{% bs_icon 'envelope' %}</i></div>
-              <input type="email" class="form-control" id="loginEmail" placeholder="Correo electrónico">
+  <!-- Modal -->
+
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-light">
+          <h5 class="modal-title" id="loginModalLabel">Iniciar sesión</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Formulario de inicio de sesión -->
+          <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="username" class="form-label visually-hidden">Correo electrónico</label>
+              <div class="input-group">
+                <div class="input-group-text"><i class="fas fa-envelope"></i></div>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Correo electrónico">
+              </div>
             </div>
-          </div>
-          <div class="mb-3">
-            <label for="loginPassword" class="form-label visually-hidden">Contraseña</label>
-            <div class="input-group">
-              <div class="input-group-text">{% bs_icon 'lock' %}</i></div>
-              <input type="password" class="form-control" id="loginPassword" placeholder="Contraseña">
+            <div class="mb-3">
+              <label for="loginPassword" class="form-label visually-hidden">Contraseña</label>
+              <div class="input-group">
+                <div class="input-group-text"><i class="fas fa-lock"></i></div>
+                <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Contraseña">
+              </div>
             </div>
-          </div>
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="rememberMe">
-              <label class="form-check-label" for="rememberMe">
-                Recordar contraseña
-              </label>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">
+                  Recordar contraseña
+                </label>
+              </div>
+              <a href="#" class="text-primary">¿Olvidaste tu contraseña?</a>
             </div>
-            <a href="#" class="text-primary">¿Olvidaste tu contraseña?</a>
-          </div>
-          <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <p class="mb-0">¿No tienes una cuenta? <a href="#" class="text-primary" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Regístrate aquí</a></p>
+            <button type="submit" class="btn btn-dark">Iniciar sesión</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <p class="mb-0">¿No tienes una cuenta? <a href="#" class="text-primary" data-bs-toggle="modal"
+              data-bs-target="#registerModal" data-bs-dismiss="modal">Regístrate aquí</a></p>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-- Modal de registro -->
-<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header bg-primary text-light">
-        <h5 class="modal-title" id="registerModalLabel">Regístrate</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="registerName" class="form-label">Nombre completo</label>
-            <input type="text" class="form-control" id="registerName" required>
+
+  <!-- Modal de registro -->
+  <form method="post" action="{% url 'registro' %}">
+    {% csrf_token %}
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-light">
+            <h5 class="modal-title" id="registerModalLabel">Regístrate</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="mb-3">
-            <label for="registerEmail" class="form-label">Correo electrónico</label>
-            <input type="email" class="form-control" id="registerEmail" required>
-          </div>
-          <div class="mb-3">
-            <label for="registerPassword" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" id="registerPassword" required>
-          </div>
-          <div class="mb-3">
-            <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
-            <input type="password" class="form-control" id="confirmPassword" required>
-          </div>
-          <div class="mb-3">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="agreeCheckbox" required>
-              <label class="form-check-label" for="agreeCheckbox">
-                Acepto los términos y condiciones
-              </label>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="id_rut" class="form-label">RUT</label>
+                  {{ form.rut }}
+                  <small class="form-text text-muted">Ejemplo: 12345678-k</small>
+                  <div class="invalid-feedback">{{ form.rut.errors }}</div>
+                  <div id="rut-message"></div>
+                  <br>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="id_first_name" class="form-label">Nombre completo</label>
+                  <div class="row">
+                    <div class="col-md-6">
+                      {{ form.first_name }}
+                    </div>
+                    <div class="col-md-6">
+                      {{ form.last_name }}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+            <div class="mb-3">
+              <label for="id_email" class="form-label">Correo electrónico</label>
+              {{ form.email }}
+              <div class="invalid-feedback">{{ form.email.errors }}</div>
+              <div id="email-message"></div>
+              <br>
+            </div>
+            <div class="mb-3">
+              <label for="id_username" class="form-label">Nombre de usuario</label>
+              {{ form.username }}
+              <div class="invalid-feedback">{{ form.username.errors }}</div>
+            </div>
+            <div class="mb-3">
+              <label for="id_direccion" class="form-label">Dirección</label>
+              {{ form.direccion }}
+              <div class="invalid-feedback">{{ form.direccion.errors }}</div>
+            </div>
+            <div class="mb-3">
+              <label for="id_fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
+              {{ form.fecha_nacimiento }}
+              <div class="invalid-feedback">{{ form.fecha_nacimiento.errors }}</div>
+            </div>
+            <div class="mb-3">
+              <label for="id_password1" class="form-label">Contraseña</label>
+              {{ form.password1 }}
+            </div>
+            <div class="mb-3">
+              <label for="id_password2" class="form-label">Confirmar contraseña</label>
+              {{ form.password2 }}
+              <div class="invalid-feedback">{{ form.password2.errors }}</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Registrarse</button>
           </div>
-          <button type="submit" class="btn btn-primary">Registrarse</button>
-        </form>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-<!-- Modal de bienvenida -->
-	<div id="myModalbienvenido" class="modal">
-		<h2>Bienvenido</h2>
-		<p>¡Hola <span id="name"></span>!</p>
-		<button id="close-btn">Cerrar</button>
-	</div>
-<script>
-  const form = document.getElementById("contact-form");
-  form.addEventListener("submit", function(event) {
-    event.preventDefault();
+  </form>
+  
+  <script type="text/javascript">
+    function validarRut(rut) {
+      var rexp = new RegExp(/^([0-9])+\-([kK0-9])+$/);
+      if (rut.match(rexp)) {
+        rut = rut.split('-');
+        var elRut = rut[0], factor = 2, suma = 0, dv, i;
+        for (i = (elRut.length - 1); i >= 0; i--) {
+          suma += parseInt(elRut.charAt(i)) * factor++;
+          if (factor > 7) factor = 2;
+        }
+        dv = 11 - (suma % 11);
+        if (dv == 11) dv = 0;
+        else if (dv == 10) dv = "K";
+        if (dv == rut[1].toUpperCase()) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
 
-    const name = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
+    var rutInput = document.getElementById('rut');
+    var rutMessage = document.getElementById('rut-message');
+    rutInput.addEventListener('blur', function () {
+      var rutValue = this.value;
+      if (validarRut(rutValue)) {
+        rutMessage.innerHTML = 'RUT VALIDO';
+        rutMessage.style.color = 'green';
+      } else {
+        rutMessage.innerHTML = 'RUT INVALIDO';
+        rutMessage.style.color = 'red';
+      }
+    });
+  </script>
 
-    // Almacenar los datos en localStorage
+  <script>
+    function validarEdad() {
+      var fechaNacimiento = document.getElementById("registerdate").value;
+      var fechaActual = new Date();
+      var edad = fechaActual.getFullYear() - new Date(fechaNacimiento).getFullYear();
+
+      if (edad < 18) {
+        document.getElementById("edad-message").innerHTML = "Debes ser mayor de edad para registrarte.";
+        document.getElementById("registerdate").classList.add("is-invalid");
+        document.getElementById("registerdate").focus();
+        return false;
+      } else {
+        document.getElementById("edad-message").innerHTML = "";
+        document.getElementById("registerdate").classList.remove("is-invalid");
+        return true;
+      }
+    }
+    const emailInput = document.getElementById('email');
+    const emailMessage = document.getElementById('email-message');
+
+    emailInput.addEventListener('input', () => {
+      if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(emailInput.value)) {
+        emailInput.classList.add('is-invalid');
+        emailMessage.innerHTML = 'El correo electrónico no tiene un formato válido';
+      } else {
+        emailInput.classList.remove('is-invalid');
+        emailMessage.innerHTML = '';
+      }
+    });
+    function validarRut() {
+      var rut = document.getElementById("rut").value.trim();
+
+      // Validación básica de formato
+      if (rut.length < 8 || rut.length > 10 || !/^0*(\d{1,3}(\.?\d{3})*)\-?([\dkK])$/.test(rut)) {
+        alert("RUT INVALIDO");
+        return false;
+      }
+
+      // Eliminar puntos y guión verificador
+      rut = rut.replace(/\./g, "").replace(/\-/g, "").toUpperCase();
+
+      // Obtener cuerpo y dígito verificador
+      var cuerpo = rut.slice(0, -1);
+      var dv = rut.slice(-1);
+
+      // Calcular dígito verificador esperado
+      var suma = 0;
+      var multiplicador = 2;
+      for (var i = cuerpo.length - 1; i >= 0; i--) {
+        suma += multiplicador * parseInt(cuerpo.charAt(i));
+        multiplicador = multiplicador >= 7 ? 2 : multiplicador + 1;
+      }
+      var dvEsperado = 11 - (suma % 11);
+
+      // Verificar dígito verificador
+      if (dvEsperado == 11) {
+        dvEsperado = "0";
+      } else if (dvEsperado == 10) {
+        dvEsperado = "K";
+      } else {
+        dvEsperado = dvEsperado.toString();
+      }
+      if (dv != dvEsperado) {
+        return false;
+      }
+
+      return true;
+    }
 
 
-    // AVISO DE FUNCIONALIDAD
-    alert("Hola "+ name);
-    
+
+    const form = document.getElementById("contact-form");
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const name = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      // Almacenar los datos en localStorage
+
+
+      // AVISO DE FUNCIONALIDAD
+      alert("Hola " + name);
+
+    });
+  </script>
+  <script>
+    const passwordInput = document.getElementById('registerPassword');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const invalidFeedback = document.querySelector('.invalid-feedback');
+
+    passwordInput.addEventListener('change', validatePassword);
+    confirmPasswordInput.addEventListener('change', validatePassword);
+
+    function validatePassword() {
+      const password = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+
+      if (password !== confirmPassword) {
+        invalidFeedback.textContent = 'Las contraseñas no coinciden';
+        confirmPasswordInput.classList.add('is-invalid');
+      } else {
+        invalidFeedback.textContent = '';
+        confirmPasswordInput.classList.remove('is-invalid');
+      }
+
+      const passwordRegex = /^(?=.*\d)(?=.*\W)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+      if (!passwordRegex.test(password)) {
+        passwordInput.classList.add('is-invalid');
+        invalidFeedback.textContent = 'La contraseña debe contener al menos un símbolo, una mayúscula y un número';
+      } else {
+        passwordInput.classList.remove('is-invalid');
+      }
+    }
+
+
+    var myModal = new bootstrap.Modal(document.getElementById('menuModal'), {
+    keyboard: false
   });
-</script>
+
+  document.querySelector('#menuModal .btn-close').addEventListener('click', function() {
+    myModal.hide();
+  });
+
+  document.querySelector('#menuModal').addEventListener('click', function(e) {
+    if (e.target == this) {
+      myModal.hide();
+    }
+  });
+
+  document.querySelector('.navbar-toggler').addEventListener('click', function() {
+    myModal.show();
+  });
+
+  </script>
+
   {% block content %}
   {% endblock %}
-</div>
-
-{% include 'footer.html' %}
+  </div>
 
 
 
+
+
+
+  {% include 'footer.html' %}
+
+
+  {% block scripts %}
+  <!-- Coloca tus scripts aquí -->
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+  {% endblock %}
 
 </body>
+
 </html>

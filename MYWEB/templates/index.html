@@ -1,14 +1,18 @@
+
 {% extends "base.html" %}
+{% load static %}
 {% load bootstrap_icons %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
 {% block content %}
 <div class="container mb-8">
- <h1>PRODUCTOS DISPONIBLES</h1>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+ <h1 class="centrado">PRODUCTOS DISPONIBLES</h1>
 </div>
 
 <section>
   <div class="container my-5">
     <header class="mb-4">
-      <h3>Recommended</h3>
+      <h3>Productos principales</h3>
     </header>
 
     <div class="row">
@@ -28,16 +32,16 @@
         </div>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card my-2 shadow-0">
+        <div class="card my-2 shadow-0 rounded border">
           <a href="#" class="">
-            <img src="https://cdn.shopify.com/s/files/1/0270/9051/8064/products/CapturadePantalla2022-07-05ala_s_19.03.25_2048x.png?v=1657062215" class="card-img-top rounded-2"style="aspect-ratio: 1 / 1" />
+            <img src="https://cdn.shopify.com/s/files/1/0270/9051/8064/products/CapturadePantalla2022-07-05ala_s_19.03.25_2048x.png?v=1657062215" class="card-img-top rounded-2" style="aspect-ratio: 1 / 1" />
           </a>
-          <div class="card-body p-0 pt-2">
-            <a href="#!" class="btn btn-light border px-2 pt-2 float-end icon-hover"><i class="fas fa-heart fa-lg px-1 text-secondary"></i></a>
-            <h5 class="card-title">$9.50</h5>
-            <p class="card-text mb-0">Slim fit T-shirt for men</p>
-            <p class="text-muted">
-              Sizes: S, M, XL
+          <div class="card-body p-2 pt-3">
+            <a href="#!" class="btn btn-light border px-2 pt-2 float-end icon-hover">{% bs_icon 'heart' %}</i></a>
+            <a href="#!" class="btn btn-light border px-2 pt-2 float-end icon-hover">{% bs_icon 'cart3' %}</i></a>
+
+            <h5 class="card-title text-dark">$9.50</h5>
+            <p class="card-text mb-0 text-dark">Slim fit T-shirt for men</p>
             </p>
           </div>
         </div>
@@ -76,24 +80,20 @@
   </div>
   
 </section>
-<!-- Recommended -->
-<section>
   <div class="container my-5">
- <nav aria-label="...">
-  <ul class="pagination">
-    <li class="page-item disabled">
-      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item active" aria-current="page">
-      <a class="page-link" href="#">2</a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#">Next</a>
-    </li>
-  </ul>
- </nav>
-</section>
-
+    <div class="row">
+      {% for producto in productos %}
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ producto.nombre }}</h5>
+              <p class="card-text">{{ producto.descripcion }}</p>
+            </div>
+ 
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}

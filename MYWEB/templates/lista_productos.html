@@ -1,0 +1,40 @@
+{% extends 'registro.html' %}
+{% load static %}
+{% load bootstrap_icons %}
+{% block content %}
+
+<section>
+    <div class="container my-5">
+      <header class="mb-4">
+        <h3>Productos principales</h3>
+      </header>
+      <div class="row">
+        {% for producto in productos %}
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="card my-2 shadow-0 rounded border">
+            <a href="http://127.0.0.1:8000/product/{{ producto.id_producto }}/">
+              {% if producto.link_img %}
+                <img src="http://127.0.0.1:8000/productos/{{ producto.link_img }}" class="d-block w-100" alt="{{ producto.nombre_pro }}">
+              {% else %}
+                <img src="http://127.0.0.1:8000/productos/{{ producto.id_producto }}/" class="d-block w-100" alt="{{ producto.nombre_pro }}">
+              {% endif %}
+            </a>
+            <div class="card-body p-2 pt-3"> 
+              <a href="{% url 'agregar_lista_deseos' producto.id_producto %}" class="btn btn-light border px-2 pt-2 float-end icon-hover"><i class="fas fa-heart"></i></a>
+              <a href="{% url 'Add' producto.id_producto %}" class="btn btn-light border px-2 pt-2 float-end icon-hover"><i class="fas fa-cart-plus"></i> </a>
+              <p class="card-text mb-0 text-dark">{{ producto.nombre_pro|upper }}</p>                
+              <h5 class="card-title text-dark">${{ producto.precio }}</h5>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      
+      
+      
+      </div>
+    </div>
+  </section>
+  
+
+{% endblock %}
+

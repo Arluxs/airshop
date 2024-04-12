@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h1>Lista de deseos</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in wishlist %}
+        <tr>
+          <td>{{ item.product }}</td>
+          <td>{{ item.price }}</td>
+          <td><a href="{% url 'remove_from_wishlist' item.pk %}">Eliminar</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

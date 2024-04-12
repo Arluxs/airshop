@@ -1,0 +1,40 @@
+{% extends "base1.html" %}
+{% load static %}
+
+
+{% block title %}Contacto{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h1 >Contacto</h1>
+            <p>Para contactarnos, puedes hacerlo a través de los siguientes medios:</p>
+            <ul>
+              <li>Teléfono: +54 11 1234-5678</li>
+              <li>Email: info@misitioweb.com</li>
+              <li>Dirección: Calle Falsa 123, Ciudad Autónoma de Buenos Aires</li>
+            </ul>
+            <form>
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre completo</label>
+                    <input type="text" class="form-control" id="nombre">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control" id="email">
+                </div>
+                <div class="mb-3">
+                    <label for="mensaje" class="form-label">Mensaje</label>
+                    <textarea class="form-control" id="mensaje" rows="5"></textarea>
+                </div>
+                <button type="submit" class="btn btn-dark">Enviar</button>
+            </form>
+        </div>
+        <div class="col-md-6 d-flex align-items-center">
+            <img src="{% static 'imagenes/conta.jpg' %}" class="img-fluid mx-auto" alt="Imagen de contacto" style="max-width: 70%;">
+        </div>
+    </div>
+</div>
+
+{% endblock %}

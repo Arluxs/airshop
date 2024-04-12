@@ -1,8 +1,12 @@
-.icon-hover:hover {
-    border-color: #3b71ca !important;
-    background-color: white !important;
-  }
-  
-  .icon-hover:hover i {
-    color: #3b71ca !important;
+@media (max-width: 1080px) {
+    .site-footer {
+        display: none;
+    }
+
+    .logo-and-copyright {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+      }
   }

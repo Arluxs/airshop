@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+{% load static %}
+{% load bootstrap_icons %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+
+<!-- Footer -->
+
+<footer class="text-center text-lg-start bg-light text-muted">
+  
+    <!-- Section: Social media -->
+    <section class="p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+      <div class="container">
+        <div class="row d-flex">
+          <!-- Left -->
+          <div class="col-md-6 col-sm-12 mb-2 mb-md-0 d-flex justify-content-center justify-content-md-start">
+            <div class="">
+              <div class="input-group" style="max-width: 400px;">
+                <input type="email" class="form-control border" placeholder="Email" aria-label="Email" aria-describedby="button-addon2" />
+                <button class="btn btn-dark" type="button" id="button-addon2" data-mdb-ripple-color="dark">
+                  Unete al team
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Left -->
+  
+          <!-- Right -->
+          <div class="col-md-6 col-sm-12 float-center">
+            <div class="float-md-end">
+              <a class="btn btn-icon text-white px-3 border btn-dark" title="Facebook" target="_blank" href="#">{% bs_icon 'facebook' %}</a>
+              <a class="btn btn-icon text-white px-3 border btn-dark" title="Instagram"  target="_blank" href="#">{% bs_icon 'instagram' %}</a>
+              <a class="btn btn-icon text-white px-3 border btn-dark" title="Youtube" target="_blank" href="#">{% bs_icon 'youtube' %}</a>
+              <a class="btn btn-icon text-white px-3 border btn-dark" title="Twitter" target="_blank" href="#">{% bs_icon 'twitter' %}</a>
+            </div>
+          </div>
+          <!-- Right -->
+        </div>
+      </div>
+    </section>
+    <!-- Section: Social media -->
+  
+    <!-- Section: Links  -->
+    <section class="">
+      <div class="container text-center text-md-start mt-5 mb-4 logo-and-copyright ">
+        <!-- Grid row -->
+        <div class="row mt-3">
+          <!-- Grid column -->
+          <div class="col-12 col-lg-3 col-sm-12">
+            <!-- Content -->
+            <a href="{% url 'index' %}" target="_blank" class="ms-md-2">
+              <img src="{% static 'imagenes/airsoftshop.png' %}" href="{% url 'index' %}" height="35" />
+            </a>
+            <p class="mt-3">
+              © 2023 Copyright: AIRSHOP.
+            </p>
+          </div>
+          <!-- Grid column -->
+  
+          <!-- Grid column -->
+          <footer class="site-footer">
+          <div class="col-6 col-sm-4 col-lg-2">
+            <!-- Links -->
+            <h6 class="text-uppercase text-dark fw-bold mb-2">
+              TIENDA
+            </h6>
+            <ul class="list-unstyled mb-4">
+              <li><a class="text-muted" href="#">Sobre nosotros</a></li>
+              <li><a class="text-muted" href="#">Buscar productos</a></li>
+              <li><a class="text-muted" a href="{% url 'listar_categorias' %}">Categorias</a></li>
+            </ul>
+          </div>
+          <!-- Grid column -->
+        </footer>
+  
+    </section>
+    
+  </footer>
+  <!-- Footer -->

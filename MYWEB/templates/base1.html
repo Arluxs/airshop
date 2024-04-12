@@ -1,0 +1,605 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="{% static 'js/ajax.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'webfonts/all.min.css' %}">
+  <script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  {% load bootstrap_icons %}
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-fluid">
+      <img src="{% static 'imagenes/airsoftshop.png' %}" href="{% url 'listapro' %}" height="35"  class="d-block mx-auto d-md-none"/>
+      <img src="{% static 'imagenes/airsoftshop.png' %}" href="{% url 'listapro' %}" height="35" class="d-none d-md-block"/>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="modal" data-bs-target="#menuModal">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'listapro' %}">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <!--<a class="nav-link text-dark" href="#">Servicios</a> -->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="{% url 'contacto' %}">Contacto</a>
+          </li>
+          <li class="nav-item">
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-dark" type="submit">Search</button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  
+    <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="{% url 'listapro' %}">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <!--<a class="nav-link text-dark" href="#">Servicios</a> -->
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="{% url 'contacto' %}">Contacto</a>
+              </li>
+              <li class="nav-item">
+                <form class="d-flex">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-dark" type="submit">Search</button>
+                </form>
+              </li>
+              <li>
+                
+  {% if not user.is_authenticated %}
+  <div class="p-3 text-center bg-white border-bottom">
+    <div class="container">
+      <div class="row gy-2 justify-content-end"> <!-- Agrega la clase justify-content-end aquí -->
+        <!-- Left elements -->
+        <div class="order-lg-last col-lg-5 col-sm-8 col-8">
+          <div class="d-flex float-end">
+            <button type="button" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark"
+              target="_blank">
+              <i class="fas fa-person"></i>
+              <p class="d-none d-md-block mb-0" data-bs-toggle="modal" data-bs-target="#loginModal">Iniciar sesion</p>
+            </button>
+            <a href="{% url 'lista_deseos' %}"
+              class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark" target="_blank">
+              <i class="fas fa-heart"></i>
+              <p class="d-none d-md-block mb-0">Wishlist</p>
+            </a>
+            <a href="{%url 'carrito' %}" class="border rounded py-1 px-3 nav-link d-flex align-items-center text-dark"
+              target="_blank">
+              <i class="fas fa-cart3"></i>
+              <p class="d-none d-md-block mb-0">My cart</p>
+            </a>
+          </div>
+        </div>
+        <!-- Center elements -->
+        <div>
+
+        </div>
+        <!-- Right elements -->
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+
+
+
+
+
+  {% if user.is_authenticated %}
+  <div class="p-3 text-center bg-white border-bottom">
+    <div class="container">
+      <div class="row gy-2 justify-content-end">
+        <!-- Right elements -->
+        <div class="order-lg-last col-lg-5 col-sm-8 col-8">
+          <div class="d-flex float-end">
+            <a href="{% url 'lista_deseos' %}"
+              class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark" target="_blank">
+              <i class="fas fa-heart"></i>
+              <p class="d-none d-md-block mb-0">Wishlist</p>
+            </a>
+            <a href="{% url 'carrito' %}"
+              class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark" target="_blank">
+              <i class="fas fa-cart3"></i>
+              <p class="d-none d-md-block mb-0">My cart</p>
+            </a>
+            <a href="{% url 'user_profile' %}"
+              class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark" target="_blank">
+              <i class="fas fa-person"></i>
+              <p class="d-none d-md-block mb-0">Hola {{ user.username }}!</p>
+            </a>
+            <a href="{% url 'logout' %}" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark"
+              target="_blank">
+              <i class="fas fa-sign-out-alt"></i>
+
+              <p class="d-none d-md-block mb-0">Cerrar sesión</p>
+            </a>
+          </div>
+        </div>
+        <!-- Right elements -->
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  
+  <!-- Modal -->
+  <div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="menuModalLabel">Menú de Navegación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="{% url 'listapro' %}">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <!--<a class="nav-link text-dark" href="#">Servicios</a> -->
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="{% url 'contacto' %}">Contacto</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="#">Acerca de nosotros</a>
+            </li>
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
+  {% if not user.is_authenticated %}
+  <div class="p-3 text-center bg-white border-bottom">
+    <div class="container">
+      <div class="row gy-2 justify-content-end"> <!-- Agrega la clase justify-content-end aquí -->
+        <!-- Left elements -->
+        <div class="order-lg-last col-lg-5 col-sm-8 col-8">
+          <div class="d-flex float-end">
+            <button type="button" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark"
+              target="_blank">
+              <i class="fas fa-person"></i>
+              <p class="d-none d-md-block mb-0" data-bs-toggle="modal" data-bs-target="#loginModal">Iniciar sesion</p>
+            </button>
+            <a href="{% url 'lista_deseos' %}"
+              class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark" target="_blank">
+              <i class="fas fa-heart"></i>
+              <p class="d-none d-md-block mb-0">Wishlist</p>
+            </a>
+            <a href="{%url 'carrito' %}" class="border rounded py-1 px-3 nav-link d-flex align-items-center text-dark"
+              target="_blank">
+              <i class="fas fa-cart3"></i>
+              <p class="d-none d-md-block mb-0">My cart</p>
+            </a>
+          </div>
+        </div>
+        <!-- Center elements -->
+        <div>
+
+        </div>
+        <!-- Right elements -->
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+
+
+
+
+
+  {% if user.is_authenticated %}
+  <div class="p-3 text-center bg-white border-bottom">
+    <div class="container">
+      <div class="row gy-2 justify-content-end">
+        <!-- Right elements -->
+        <div class="order-lg-last col-lg-5 col-sm-8 col-8">
+          <div class="d-flex float-end">
+            <a href="{% url 'lista_deseos' %}"
+              class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark" target="_blank">
+              <i class="fas fa-heart"></i>
+              <p class="d-none d-md-block mb-0">Wishlist</p>
+            </a>
+            <a href="{% url 'carrito' %}"
+              class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark" target="_blank">
+              <i class="fas fa-cart3"></i>
+              <p class="d-none d-md-block mb-0">My cart</p>
+            </a>
+            <a href="{% url 'user_profile' %}"
+              class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark" target="_blank">
+              <i class="fas fa-person"></i>
+              <p class="d-none d-md-block mb-0">Hola {{ user.username }}!</p>
+            </a>
+            <a href="{% url 'logout' %}" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center text-dark"
+              target="_blank">
+              <i class="fas fa-sign-out-alt"></i>
+              <p class="d-none d-md-block mb-0">Cerrar sesión</p>
+            </a>
+          </div>
+        </div>
+        <!-- Right elements -->
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+
+
+
+
+  <!-- Modal -->
+
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-light">
+          <h5 class="modal-title" id="loginModalLabel">Iniciar sesión</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Formulario de inicio de sesión -->
+          <form method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="my-3">
+              <label for="username" class="form-label">Nombre de usuario</label>
+
+              <div class="input-group">
+                
+                <div class="input-group-text"><i class="fas fa-envelope"></i></div>
+
+                <input type="text" class="form-control" id="username" name="username" required
+                value="{{ form.username.value|default:'' }}" aria-label="Nombre de usuario">
+              </div>
+            </div>
+            <div class="my-3">
+              <label for="password1" class="form-label">Password</label>
+
+              <label for="loginPassword" class="form-label visually-hidden">Contraseña</label>
+              <div class="input-group">
+                <div class="input-group-text"><i class="fas fa-lock"></i></div>
+                <input type="password" class="form-control" id="password" name="password" required
+                value="{{ form.password.value|default:'' }}" aria-label="password1">   
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center my-3">
+
+              <a href="#" class="text-primary">¿Olvidaste tu contraseña?</a>
+            </div>
+            <button type="submit" class="btn btn-dark">Iniciar sesión</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <p class="mb-0">¿No tienes una cuenta? <a href="#" class="text-primary" data-bs-toggle="modal"
+              data-bs-target="#registerModal" data-bs-dismiss="modal">Regístrate aquí</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de registro -->
+  <form method="post" action="{% url 'registro' %}">
+    {% csrf_token %}
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-light">
+            <h5 class="modal-title" id="registerModalLabel">Regístrate</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="id_username" class="form-label">Nombre de usuario</label>
+                  <input type="text" class="form-control" id="username" name="username" required
+                  value="{{ form.username.value|default:'' }}" aria-label="Nombre de usuario">                  
+                  <div class="invalid-feedback">
+                    {{ form.username.errors }}</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="rut" class="form-label">RUT</label>
+                  {{ form.rut.errors }}
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="rut" name="rut" required
+                    value="{{ form.rut.value|default:'' }}" aria-label="RUT" aria-describedby="basic-addon1">
+
+                    <div id="rut-message"></div>
+                  </div>
+                  
+                  <small class="form-text text-muted">Ejemplo: 12345678-K</small>
+                  <div class="invalid-feedback"></div>
+                  <br>
+                </div>
+              </div>
+            </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="registerFirstName" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="registerFirstName" name="first_name" value="{{ form.first_name.value|default:'' }}" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="registerLastName" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="registerLastName" name="last_name" value="{{ form.last_name.value|default:'' }}" required>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="id_email" class="form-label">Correo electrónico</label>
+                <input type="text" class="form-control" id="email" name="email" value="{{ form.email.value|default:'' }}" required>
+                <div class="invalid-feedback">{{ form.email.errors }}</div>
+                <div id="email-message"></div>
+                <br>
+              </div>
+              <div class="mb-3">
+                <label for="id_email" class="form-label">Dirección</label>
+                <input type="text" class="form-control" id="direccion" name="direccion" value="{{ form.direccion.value|default:'' }}" required>
+                <div class="invalid-feedback">{{ form.direccion.errors }}</div>
+                <br>
+              </div>
+              <div class="mb-3">
+                <label for="registerdate" class="form-label">Fecha de nacimiento</label>
+                <input type="date" class="form-control" id="registerdate" name="fecha_nacimiento" value="{{ form.fecha_nacimiento.value|default:'' }}"  onchange="validarEdad()" required>
+                <div id="edad-message"></div>
+              </div> 
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="registerPassword" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="registerPassword" name="password1" value="{{ form.password1.value|default:'' }}" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="password2" value="{{ form.password2.value|default:'' }}" required>
+                    <div class="invalid-feedback">{{ form.password2.errors }}</div>
+                  </div>
+                </div>
+                <small class="form-text text-muted">La contraseña debe contener al menos un símbolo, una mayúscula y un número</small>
+              </div>  
+              <button type="submit" class="btn btn-primary" id="registerButton" disabled>Registrarse</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+  <script type="text/javascript">
+    function validarRut(rut) {
+      var rexp = new RegExp(/^([0-9])+\-([kK0-9])+$/);
+      if (rut.match(rexp)) {
+        rut = rut.split('-');
+        var elRut = rut[0], factor = 2, suma = 0, dv, i;
+        for (i = (elRut.length - 1); i >= 0; i--) {
+          suma += parseInt(elRut.charAt(i)) * factor++;
+          if (factor > 7) factor = 2;
+        }
+        dv = 11 - (suma % 11);
+        if (dv == 11) dv = 0;
+        else if (dv == 10) dv = "K";
+        if (dv == rut[1].toUpperCase()) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+
+    var rutInput = document.getElementById('rut');
+    var rutMessage = document.getElementById('rut-message');
+    rutInput.addEventListener('blur', function () {
+      var rutValue = this.value;
+      if (validarRut(rutValue)) {
+        rutMessage.innerHTML = 'RUT VALIDO';
+        rutMessage.style.color = 'green';
+      } else {
+        rutMessage.innerHTML = 'RUT INVALIDO';
+        rutMessage.style.color = 'red';
+      }
+    });
+  </script>
+
+  <script>
+    function validarEdad() {
+      var fechaNacimiento = document.getElementById("registerdate").value;
+      var fechaActual = new Date();
+      var edad = fechaActual.getFullYear() - new Date(fechaNacimiento).getFullYear();
+
+      if (edad < 18) {
+        document.getElementById("edad-message").innerHTML = "Debes ser mayor de edad para registrarte.";
+        document.getElementById("registerdate").classList.add("is-invalid");
+        document.getElementById("registerdate").focus();
+        return false;
+      } else {
+        document.getElementById("edad-message").innerHTML = "";
+        document.getElementById("registerdate").classList.remove("is-invalid");
+        return true;
+      }
+    }
+    const emailInput = document.getElementById('email');
+    const emailMessage = document.getElementById('email-message');
+
+    emailInput.addEventListener('input', () => {
+      if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(emailInput.value)) {
+        emailInput.classList.add('is-invalid');
+        emailMessage.innerHTML = 'El correo electrónico no tiene un formato válido';
+      } else {
+        emailInput.classList.remove('is-invalid');
+        emailMessage.innerHTML = '';
+      }
+    });
+    function validarRut() {
+      var rut = document.getElementById("rut").value.trim();
+
+      // Validación básica de formato
+      if (rut.length < 8 || rut.length > 10 || !/^0*(\d{1,3}(\.?\d{3})*)\-?([\dkK])$/.test(rut)) {
+        alert("RUT INVALIDO");
+        return false;
+      }
+
+      // Eliminar puntos y guión verificador
+      rut = rut.replace(/\./g, "").replace(/\-/g, "").toUpperCase();
+
+      // Obtener cuerpo y dígito verificador
+      var cuerpo = rut.slice(0, -1);
+      var dv = rut.slice(-1);
+
+      // Calcular dígito verificador esperado
+      var suma = 0;
+      var multiplicador = 2;
+      for (var i = cuerpo.length - 1; i >= 0; i--) {
+        suma += multiplicador * parseInt(cuerpo.charAt(i));
+        multiplicador = multiplicador >= 7 ? 2 : multiplicador + 1;
+      }
+      var dvEsperado = 11 - (suma % 11);
+
+      // Verificar dígito verificador
+      if (dvEsperado == 11) {
+        dvEsperado = "0";
+      } else if (dvEsperado == 10) {
+        dvEsperado = "K";
+      } else {
+        dvEsperado = dvEsperado.toString();
+      }
+      if (dv != dvEsperado) {
+        return false;
+      }
+
+      return true;
+    }
+
+
+
+    const form = document.getElementById("contact-form");
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const name = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      // Almacenar los datos en localStorage
+
+
+      // AVISO DE FUNCIONALIDAD
+      alert("Hola " + name);
+
+    });
+  </script>
+  <script>
+const passwordInput = document.getElementById('registerPassword');
+const confirmPasswordInput = document.getElementById('confirmPassword');
+const invalidFeedback = document.querySelector('.invalid-feedback');
+const registerButton = document.getElementById('registerButton');
+
+passwordInput.addEventListener('change', validatePassword);
+confirmPasswordInput.addEventListener('change', validatePassword);
+
+function validatePassword() {
+  const password = passwordInput.value;
+  const confirmPassword = confirmPasswordInput.value;
+
+  let isValidPassword = true;
+
+  if (password !== confirmPassword) {
+    invalidFeedback.textContent = 'Las contraseñas no coinciden';
+    confirmPasswordInput.classList.add('is-invalid');
+    isValidPassword = false;
+  } else {
+    invalidFeedback.textContent = '';
+    confirmPasswordInput.classList.remove('is-invalid');
+  }
+
+  const passwordRegex = /^(?=.*\d)(?=.*\W)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+  if (!passwordRegex.test(password)) {
+    passwordInput.classList.add('is-invalid');
+    invalidFeedback.textContent = 'La contraseña debe contener al menos un símbolo, una mayúscula y un número';
+    isValidPassword = false;
+  } else {
+    passwordInput.classList.remove('is-invalid');
+  }
+
+  if (isValidPassword && password === confirmPassword) {
+    registerButton.disabled = false;
+  } else {
+    registerButton.disabled = true;
+  }
+}
+  
+
+  </script>
+
+  {% block content %}
+  {% endblock %}
+  </div>
+
+
+
+
+
+
+  {% include 'footer.html' %}
+
+
+  {% block scripts %}
+  <!-- Coloca tus scripts aquí -->
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+  {% endblock %}
+
+</body>
+
+</html>
+
+

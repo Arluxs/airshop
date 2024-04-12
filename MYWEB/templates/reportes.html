@@ -1,0 +1,34 @@
+
+
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Reporte de Ventas</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID Venta</th>
+            <th>SKU Producto</th>
+            <th>Nombre Producto</th>
+            <th>Fecha</th>
+            <th>Total</th>
+            <th>RUT</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for venta in ventas %}
+        <tr>
+            <td>{{ venta.id_venta }}</td>
+            <td>{{ venta.sku_producto }}</td>
+            <td>{{ venta.producto.nombre }}</td>
+            <td>{{ venta.fecha }}</td>
+            <td>{{ venta.total }}</td>
+            <td>{{ venta.rut }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

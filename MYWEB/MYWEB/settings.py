@@ -40,7 +40,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap5',
     'django_bootstrap_icons',
+    'MYWEB1',
+    'jquery',
+    'rest_framework',
+    'rest_framework.authtoken',
+
+    'rest_productos',
+
+
+    #'lista_deseo',
+
 ]
+
+AUTH_USER_MODEL = 'MYWEB1.CustomUser'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -71,6 +84,13 @@ TEMPLATES = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+
+
 WSGI_APPLICATION = 'MYWEB.wsgi.application'
 
 
@@ -79,8 +99,12 @@ WSGI_APPLICATION = 'MYWEB.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'airsoftshop',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -121,8 +145,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'MYWEB1/static'),)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'MYWEB1/static/imagenes/productos/')
+MEDIA_URL = '/productos/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField' 
+
+CARRITO_SESSION_ID = 'carrito'
+
+#AUTH_USER_MODEL = 'MYWEB1.CustomUser'

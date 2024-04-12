@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+  <h1>Categorías</h1>
+  
+  <form action="" method="get" class="mb-3">
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Buscar categorías...">
+      <button type="submit" class="btn btn-dark">Buscar</button>
+    </div>
+  </form>
+  
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for categoria in categorias %}
+      <tr>
+        <td>{{ categoria.id_categoria }}</td>
+        <td>{{ categoria.descripcion_ca }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="2">No se encontraron categorías</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+
+
+

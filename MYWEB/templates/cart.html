@@ -1,0 +1,145 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block content %}
+
+<script src="{% static '/js/ajax.js' %}"></script>
+<div id="cart-section-container">
+  <div id="cart-content">
+    <div class="container my-5">
+      <div class="row">
+        <div class="col-md-8">
+          <h1>Carrito de Compras</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="container my-5">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="card shopping-cart">
+            <div class="card-header bg-dark text-light">
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+              Carrito de compras
+              <div class="clearfix"></div>
+            </div>
+            <div class="card-body">
+              {% if productos %}
+              {% for producto in productos %}
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-2 text-center">
+                  <img class="img-responsive" src="{{ producto.imagen.url }}" alt="prewiew" width="120" height="80">
+                </div>
+                <div class="col-12 col-sm-12 col-md-6">
+                  <h5 class="product-name"><strong>{{ producto.nombre }}</strong></h5>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4 text-right">
+                  <div class="row">
+                    <div class="col-6 col-sm-6 col-md-6">
+                      <div class="quantity">
+                        <a href="{% url 'Sub' producto.id_producto %}" class="minus" style="display: inline-block; vertical-align: middle;">
+                          <i class="fa fa-minus" aria-hidden="true"></i>
+                        </a>
+                        <input type="text" class="form-control acumulado" value="{{ producto.cantidad }}" readonly
+                          style="display: inline-block; vertical-align: middle; width: 50px; text-align: center;">
+                        <a href="{% url 'Add' producto.id_producto %}" class="plus" style="display: inline-block; vertical-align: middle;">
+                          <i class="fa fa-plus" aria-hidden="true"></i>
+                        </a>
+                      </div>
+                      
+
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-6 text-right">
+                      <h6><strong>${{ producto.precio }}</strong></h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              {% endfor %}
+              {% else %}
+              <div class="row">
+                <div class="col-12">
+                  <div class="alert alert-danger text-center" role="alert">
+                    <strong>¡El carrito está vacío!</strong>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+            <div class="card-footer">
+              <div class="pull-right">
+                <a href="{% url 'CLS' %}" class="btn btn-danger pull-right " style="margin-left: 10px;">Limpiar
+                  carrito</a>
+                <a href="{% url 'checkout' %}" class="btn btn-success pull-right">Comprar</a>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-header bg-dark text-light">
+              <i class="fa fa-align-justify" aria-hidden="true"></i>
+              Resumen de compra
+            </div>
+            <div class="card-body">
+              <div class="mb-3">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="coupon" placeholder="Código de cupón">
+                    <button class="btn btn-outline-secondary" type="button"
+                        id="apply-coupon">Aplicar</button>
+                </div>
+            </div>
+
+            <!-- Alerta de cupón aplicado -->
+            <div class="alert alert-success d-none" role="alert" id="applied-coupon">
+                ¡Cupón aplicado con éxito!
+            </div>
+
+            <!-- Alerta de cupón inválido -->
+            <div class="alert alert-danger d-none" role="alert" id="invalid-coupon">
+                El código ingresado no es válido
+            </div>
+
+              <div class="pull-right"><span>Total: <strong>${{ total }}</strong></span></div>
+
+              <div class="clearfix"></div>
+              <hr>
+              <p class="text-center">¡Gracias por su compra!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<div id="loader">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+</div>
+<style>
+  #loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: none;
+  }
+
+  .spinner-border {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+</style>
+
+
+{% endblock %}

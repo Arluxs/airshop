@@ -1,3 +1,7 @@
-from django.test import TestCase
+from django.contrib.auth import get_user_model
 
-# Create your tests here.
+User = get_user_model()
+
+for user in User.objects.all():
+    print(user.username)
+
